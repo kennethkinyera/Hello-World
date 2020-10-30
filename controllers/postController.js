@@ -1,11 +1,18 @@
 const Post=require('../models/Post')
 
 exports.viewCreateScreen=function(req,res){
-  res.send('create-post')
+  res.render('create-post',{username:req.session.user.username,avatar:req.session.user.avatar})
 }
 
-exports.viewSingle=function(req,res){
-  res.send('single-post')
+exports.viewSingle=async function(req,res){
+    try{
+        let post=await Post.findSingleById(req.params.id)
+        res.render('single-post-screen',{post:post})
+    }
+    catch{
+        res.send('404 template here')
+    }
+  
 }
 
 exports.create=function(req,res){
@@ -14,7 +21,7 @@ exports.create=function(req,res){
 
  post.create().then(function(newId){
      req.flash ("success","New post successfully created")
-     req.session.save(()=>{res.render(`post/${newId}`)})
+     req.session.save(()=>{res.redirect(`post/${newId}`)})
  }).catch(function(errors){
       errors.forEach(error=>req.flash("errors",error))
       req.session.save(()=>res.redirect("/create-post"))

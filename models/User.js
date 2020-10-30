@@ -34,16 +34,26 @@ User.prototype.validate=function(){
         if(this.data.password.length<5){this.errors.push("You have entered a very short password")}
         if(this.data.password==""){this.errors.push("You must enter a password")}
     
-        let usernameExists=await userCollection.findOne(this.data.username)
+
+        try{
+            let usernameExists=await userCollection.findOne({username:this.data.username})
+        
         if(usernameExists && this.data.username.length>2 && validator.isAlphanumeric(this.data.username)){
             this.errors.push("This username is already taken")
+            reject()
         }
-    
-        let emailExists=await userCollection.findOne(this.data.email)
+          
+        let emailExists=await userCollection.findOne({email:this.data.email})
         if(emailExists && this.data.email.length>2 && validator.isEmail(this.data.email)){
             this.errors.push("This email is already in use")
+            reject()
         }
         resolve()
+        }catch(error){
+            console.log('Validate errors:',error)
+        }
+        
+        
     })
 }
 

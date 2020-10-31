@@ -22,6 +22,7 @@ exports.login=function(req,res){
     })
     }).catch(function(error){
         console.log('zzzz',error)
+        
         req.flash('errors',error)
         req.session.save(function(){
             res.redirect('/')

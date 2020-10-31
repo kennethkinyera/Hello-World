@@ -59,13 +59,16 @@ User.prototype.validate=function(){
 
 User.prototype.login=function(){
     
-   return new Promise(function(resolve,reject){
+   return new Promise(async (resolve,reject)=>{
+
     this.cleanUp()
-    userCollection.findOne({username:this.data.username}).then(function(attemptedUser){
-        if(attemptedUser && bcrypt.compareSync(this.data.password,attemptedUser.password)){
+    let password=this.data.password
+    await userCollection.findOne({username:this.data.username}).then(function(attemptedUser){
+
+        if(attemptedUser && bcrypt.compareSync(password,attemptedUser.password)){
             
             this.data=attemptedUser
-            this.getAvatar()
+            //this.getAvatar()
             //yes
             resolve("Yess!!!")
          }else{
@@ -80,7 +83,8 @@ User.prototype.login=function(){
 User.prototype.register=function(){
     return new Promise(async (resolve,reject)=>{
 
-        this.cleanUp()
+        try {
+            this.cleanUp()
         await this.validate()
     
         if(!this.errors.length){
@@ -92,18 +96,24 @@ User.prototype.register=function(){
         }else{
             reject(this.errors)
         }
+            
+        } catch (error) {
+            reject(error)
+        }
+        
     })
 }
 User.prototype.getAvatar=function(){
   this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
 }
 User.findByUsername=function(username){
-  return new Promise(function(resolve,reject){
+
+  return new Promise(async (resolve,reject)=>{
       if(typeof(username)!="string"){
           reject()
           return
       }
-      userCollection.findOne({username:username}).then(function(userDoc){
+      await userCollection.findOne({username:username}).then(function(userDoc){
            if(userDoc){
                userDoc=new User(userDoc,true)
                userDoc={

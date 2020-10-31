@@ -15,11 +15,13 @@ exports.login=function(req,res){
     let user=new User(req.body)
     user.login().then(function(result){
 
-    req.session.user={avatarColor:user.avatar,username:this.data.username,_id:user.data._id}
+    req.session.user={avatarColor:user.avatar,username:user.data.username,_id:user.data._id}
+    //req.session.user={avatarColor:user.avatar,username:this.data.username,_id:user.data._id}
     req.session.save(function(){
         res.redirect('/')
     })
     }).catch(function(error){
+        console.log('zzzz',error)
         req.flash('errors',error)
         req.session.save(function(){
             res.redirect('/')

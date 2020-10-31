@@ -13,7 +13,7 @@
       <form action="/register" method="POST" id="registration-form">
 
         <% resErrors.forEach(function(message){ %>
-          <div class="alert alert-danger text-muted"><%= message %>/div>
+          <div class="alert alert-danger text-muted"><% message %></div>
         <% })%>
           <div class="form-group">
             <label for="username-register" class="text-muted mb-1"><small>Username</small></label>

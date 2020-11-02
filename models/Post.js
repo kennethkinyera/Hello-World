@@ -84,13 +84,13 @@ Post.reusablePostQuery=function(uniqueOperations,visitorId){
     return new Promise(async function(resolve,reject){
 
      let aggOperations=uniqueOperations.concat([
-        {$lookup:{from:"users", localFiled:"author",foreignFiled:"_id",as:"authorDocument"}},
+        {$lookup:{from:"users", localField:"author",foreignField:"_id",as:"authorDocument"}},
         {$project:{
             title:1,
             body:1,
             createdDate:1,
             authorId:"$author",
-            author:{$arrayElemAt:["authorDocument",0]}
+            author:{$arrayElemAt:["$authorDocument",0]}
         }}
     ])
 
@@ -112,8 +112,8 @@ Post.reusablePostQuery=function(uniqueOperations,visitorId){
 }
 
 Post.findSingleById=function(id,visitorId){
-    return new Promise(async function(resolve,reject){
-       if(typeof(id)!="string" || ObjectID.isValid(id)){
+    return new Promise(async (resolve,reject)=>{
+       if(typeof(id)!="string" || ! ObjectID.isValid(id)){
            reject()
            return
        }

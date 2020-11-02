@@ -6,11 +6,13 @@ exports.viewCreateScreen=function(req,res){
 
 exports.viewSingle=async function(req,res){
     try{
-        let post=await Post.findSingleById(req.params.id)
+        console.log(req.visitorId)
+        console.log(req.params.id)
+        let post=await Post.findSingleById(req.params.id,req.visitorId)
         res.render('single-post-screen',{post:post})
     }
     catch{
-        res.send('404 template here')
+        res.render('404')
     }
   
 }

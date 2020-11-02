@@ -70,7 +70,7 @@ User.prototype.login=function(){
             this.data=attemptedUser
             //this.getAvatar()
             //yes
-            resolve("Yess!!!")
+            resolve(this.data)
          }else{
              //no
              reject("Oh no!!!")

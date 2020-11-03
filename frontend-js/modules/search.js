@@ -3,11 +3,12 @@ export default class Search{
     //select DOM elements and useful data
 constructor(){
 
-  this.injectHTML()
+  //this.injectHTML()
   this.headerSelectIcon=document.querySelector(".header-search-icon")
   this.overlay=document.querySelector(".search-overlay")
   this.closeIcon=document.querySelector(".close-live-search")
   this.events()
+  
 }
 
   // events
@@ -15,12 +16,14 @@ events(){
     this.closeIcon.addEventListener("click",()=> this.closeOverlay())
     this.headerSelectIcon.addEventListener("click",(e)=>{
         e.preventDefault()
+        console.log('yeahhhh')
         this.openOverlay()
     })
 }
   //methods
   openoverlay(){
-    this.overlay.classList.add("search-overlay--visible")
+    alert("scherch")
+    //this.overlay.classList.add("search-overlay--visible")
   }
   closeOverlay(){
     this.overlay.classList.remove("search-overlay--visible")

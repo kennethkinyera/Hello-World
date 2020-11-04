@@ -32,7 +32,7 @@ events(){
 
       let value=this.inputField.value
       if(value !="" && value !=this.previousValue){
-          
+
           clearTimeout(this.typingwaittimer)
           this.showLoaderIcon()
           this.typingwaittimer=setTimeout(()=>this.sendRequest(),3000)
@@ -40,7 +40,7 @@ events(){
       this.previousValue=value
   }
   sendRequest(){
-      axios.post('/search',{searcchTerm:this.inputField.value}).then(()=>{
+      axios.post('/search',{searchTerm:this.inputField.value}).then(()=>{
 
       }).catch(()=>{
           alert('failed')

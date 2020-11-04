@@ -99,11 +99,13 @@ Post.reusablePostQuery=function(uniqueOperations,visitorId){
        posts=posts.map(function(post){
        post.isVisitorOwner=post.authorId.equals(visitorId)
 
+       console.log('post',post)
         // fine tune post object
           post.author={
               username:post.author.username,
               avatar:new User(post.author,true).avatar
           }
+          
           return post
        })
 
@@ -153,4 +155,21 @@ Post.delete=function(postIdToDelete,currentUserId){
     })
 }
 
+Post.search=function(searchTerm){
+
+    return new Promise(async(resolve,reject)=>{
+
+        if(typeof(searchTerm)=="string"){
+
+            let posts=await Post.reusablePostQuery([
+                {$match:{$text:{$search:searchTerm}}},
+                {$sort:{$score:{$meta:"textScore"}}}
+            ])
+            resolve(posts)
+        }else{
+ 
+            reject()
+        }
+    })
+}
 module.exports=Post

@@ -40,8 +40,9 @@ events(){
       this.previousValue=value
   }
   sendRequest(){
-      axios.post('/search',{searchTerm:this.inputField.value}).then(()=>{
+      axios.post('/search',{searchTerm:this.inputField.value}).then(response=>{
 
+        console.log('response',response)
       }).catch(()=>{
           alert('failed')
       })

@@ -90,16 +90,17 @@ Post.reusablePostQuery=function(uniqueOperations,visitorId){
             body:1,
             createdDate:1,
             authorId:"$author",
-            author:{$arrayElemAt:["$authorDocument",0]}
+            author:{$arrayElemAt:['$authorDocument',0]}
         }}
     ])
 
        let posts=await postCollection.aggregate(aggOperations).toArray()
 
+       console.log('posts',posts)
        posts=posts.map(function(post){
        post.isVisitorOwner=post.authorId.equals(visitorId)
 
-       console.log('post',post)
+       //console.log('post',post)
         // fine tune post object
           post.author={
               username:post.author.username,

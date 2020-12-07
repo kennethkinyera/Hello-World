@@ -90,11 +90,14 @@ Post.reusablePostQuery=function(uniqueOperations,visitorId){
             body:1,
             createdDate:1,
             authorId:"$author",
-            author:{$arrayElemAt:['$authorDocument',0]}
+            author:{
+                $arrayElemAt:["$authorDocument",0]
+            }
         }}
     ])
 
-       let posts=await postCollection.aggregate(aggOperations).toArray()
+       
+    let posts=await postCollection.aggregate(aggOperations).toArray()
 
        console.log('posts',posts)
        posts=posts.map(function(post){

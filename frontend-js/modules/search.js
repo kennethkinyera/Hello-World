@@ -55,6 +55,7 @@ events(){
         this.renderResultsHTML(response.data)
       }).catch(()=>{
           alert('failed')
+          console.log('failed',"failed")
       })
   }
   renderResultsHTML(posts){

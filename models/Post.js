@@ -99,11 +99,13 @@ Post.reusablePostQuery=function(uniqueOperations,visitorId){
        
     let posts=await postCollection.aggregate(aggOperations).toArray()
 
-       console.log('posts',posts)
+       //console.log('posts',posts)
        posts=posts.map(function(post){
        post.isVisitorOwner=post.authorId.equals(visitorId)
 
-       //console.log('post',post)
+       post.authorId=undefined
+
+       console.log('post',post)
         // fine tune post object
           post.author={
               username:post.author.username,

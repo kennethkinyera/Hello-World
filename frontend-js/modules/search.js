@@ -50,8 +50,9 @@ events(){
   sendRequest(){
       axios.post('/search',{searchTerm:this.inputField.value}).then(response=>{
 
-        console.log(response.data)
+        //console.log(response.data)
         //console.log('response',response)
+        console.log('here',"here")
         this.renderResultsHTML(response.data)
       }).catch(()=>{
           alert('failed')
@@ -59,8 +60,8 @@ events(){
       })
   }
   renderResultsHTML(posts){
-if(posts.length){
- this.resultsArea.innerHTML=`<div class="list-group shadow-sm">
+    if(posts.length){
+        this.resultsArea.innerHTML=`<div class="list-group shadow-sm">
             <div class="list-group-item active"><strong>Search Results</strong> (4 items found)</div>
 
             <a href="#" class="list-group-item list-group-item-action">

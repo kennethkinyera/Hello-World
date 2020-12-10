@@ -5,6 +5,7 @@ export default class Search{
     //select DOM elements and useful data
 constructor(){
 
+  //alert('constructors')
   this.injectHTML()
   this.headerSelectIcon=document.querySelector(".header-search-icon")
   this.overlay=document.querySelector(".search-overlay")
@@ -20,6 +21,7 @@ constructor(){
 
   // events
 events(){
+    //alert('events')
     this.inputField.addEventListener("keyup",()=>this.keyPressHandler())
     this.closeIcon.addEventListener("click",()=> this.closeOverlay())
     this.headerSelectIcon.addEventListener("click",(e)=>{
@@ -30,6 +32,7 @@ events(){
   //methods
   keyPressHandler(){
 
+      //alert('keyPressHandler')
       let value=this.inputField.value
 
       if(value==""){
@@ -48,19 +51,20 @@ events(){
       this.previousValue=value
   }
   sendRequest(){
+      //alert('sendRequest')
       axios.post('/search',{searchTerm:this.inputField.value}).then(response=>{
 
-        //console.log(response.data)
-        //console.log('response',response)
-        console.log('here',"here")
+        //alert(JSON.stringify(response.data))
         this.renderResultsHTML(response.data)
       }).catch(()=>{
           alert('failed')
-          console.log('failed',"failed")
+          //console.log('failed',"failed")
       })
   }
   renderResultsHTML(posts){
+      //alert('renderResultsHTML')
     if(posts.length){
+        //alert(posts.length)
         this.resultsArea.innerHTML=`<div class="list-group shadow-sm">
             <div class="list-group-item active"><strong>Search Results</strong> (4 items found)</div>
 
@@ -81,12 +85,14 @@ events(){
               <span class="text-muted small">by brad on 0/12/2019</span>
             </a>
           </div>`
-}
-else{
+
+          alert(this.resultsArea)
+    }
+    else{
        this.resultsArea.innerHTML=`<p class="alert alert-danger text-center shadow-sm">Sorry,we couldn't find any results</p>`
-}
-this.hideLoaderIcon()
-this.showResultsArea()
+    }
+       this.hideLoaderIcon()
+       this.showResultsArea()
   }
   hideLoaderIcon(){
       this.loaderIcon.classList.remove("circle-loader--visible")

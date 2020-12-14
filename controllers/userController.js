@@ -1,4 +1,5 @@
 let User=require("../models/User")
+let Post=require("../models/Post")
 
 exports.mustBeLoggedIn=function(req,res,next){
   if(req.session.user){
@@ -69,7 +70,7 @@ exports.home=function(req,res){
 }
 
 exports.ifUserExists=function(req,res,next){
-    user.findByUsername(req.params.username).then(function(userDocument){
+    User.findByUsername(req.params.username).then(function(userDocument){
         req.profileUser=userDocument
         next()
     }).catch(function(){

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import DOMPurify from 'dompurify'
 
 export default class Search{
 
@@ -62,7 +63,7 @@ events(){
       //alert('renderResultsHTML')
     if(posts.length){
         
-        this.resultsArea.innerHTML=`<div class="list-group shadow-sm">
+        this.resultsArea.innerHTML=DOMPurify.sanitize(`<div class="list-group shadow-sm">
             <div class="list-group-item active"><strong>Search Results  </strong>${posts.length> 1 ? `${posts.length} items found`:` 1 item found`}</div>
             
            ${posts.map(post=>{
@@ -74,7 +75,7 @@ events(){
             </a>`
            }).join('')}
             
-          </div>`
+          </div>`)
 
     }
     else{

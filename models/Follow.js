@@ -40,6 +40,15 @@ Follow.prototype.create=function(){
             reject(this.errors)
         }
     })
+}
 
+Follow.isVisitorFollowing=async function(followedId, visitorId){
+   let followDoc= await followsCollection.findOne({followedId:followedId,authorId:new ObjectID(visitorId)})
+   if(followDoc){
+
+    return true
+   }else{
+       return false
+   }
 }
 module.exports = Follow

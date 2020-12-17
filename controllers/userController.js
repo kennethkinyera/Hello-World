@@ -1,5 +1,6 @@
-let User=require("../models/User")
-let Post=require("../models/Post")
+const User=require("../models/User")
+const Post=require("../models/Post")
+const Follow=require("../models/Follow")
 
 exports.mustBeLoggedIn=function(req,res,next){
   if(req.session.user){
@@ -85,11 +86,26 @@ exports.profilePostsScreen=function(req,res,){
         res.render('profile',{
             posts:posts,
             profileUsername:req.profileUser.username,
-            profileAvatar:req.profileUser.avatar
+            profileAvatar:req.profileUser.avatar,
+            isFollowing:isFollowing
         })
     }).catch(function(){
 
     })
     
+}
+
+exports.sharedProfileData=async function(req,res,next){
+
+    let isFollowing=false
+
+    console.log("req.session.user",req.session.user)
+    if(req.session.user){
+
+        isFollowing= await Follow.isVisitorFollowing(req.profileUser._id,req.visitorId)
+    }
+
+    req.isFollowing=isFollowing
+    next()
 }
 

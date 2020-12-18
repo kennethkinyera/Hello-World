@@ -87,7 +87,7 @@ exports.profilePostsScreen=function(req,res,){
             posts:posts,
             profileUsername:req.profileUser.username,
             profileAvatar:req.profileUser.avatar,
-            isFollowing:isFollowing
+            isFollowing:req.isFollowing
         })
     }).catch(function(){
 

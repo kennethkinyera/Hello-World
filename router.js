@@ -24,4 +24,6 @@ router.get('/profile/:username',userController.ifUserExists,userController.share
 
 //follow related routes
 router.post('/addFollow/:username',userController.mustBeLoggedIn,followController.addFollow)
+router.post('/removeFollow/:username',userController.mustBeLoggedIn,followController.removeFollow)
+
 module.exports=router

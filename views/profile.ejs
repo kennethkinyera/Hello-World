@@ -3,7 +3,7 @@
 
   <%- include('includes/flash')%>
     <h2><img class="avatar-small" src="<%= profileAvatar %>"> <%= profileUsername %>>  
-      <% if(user){
+      <% if(user && !isVistorProfile){
 
         if(isFollowing){ %>
 

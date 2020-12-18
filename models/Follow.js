@@ -27,12 +27,16 @@ Follow.prototype.validate=async function(action){
 
      if(action=="create"){
 
-        if(doesFollowAlreadyExists){this.errors.push("You are already following this user")}
+        if(doesFollowAlreadyExists==true){this.errors.push("You are already following this user")}
      }
      if(action=="delete"){
 
-        if(!doesFollowAlreadyExists){this.errors.push("You are not following this user")}
+        if(doesFollowAlreadyExists==false){this.errors.push("You are not following this user")}
      }
+     
+ 
+        if(this.followedId.equals(this.authorId)){this.errors.push("You cannot follow yourself")}
+     
 }
 
 Follow.prototype.create=function(){

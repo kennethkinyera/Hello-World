@@ -105,8 +105,8 @@ Follow.getFollowersById=function(id){
           })
           console.log("followers",followers)
           resolve(followers)
-    }catch{
-        console.log("rejected")
+    }catch(error){
+        console.log("rejected",error)
         reject()
     }
        

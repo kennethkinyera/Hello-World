@@ -7,7 +7,7 @@ let User=function(data,getAvatar){
   this.data=data
   this.errors=[]
   if(getAvatar==undefined){getAvatar=false}
-  if(getAvatar){this.getAvatar()}
+  if(getAvatar==true){this.getAvatar()}
 }
 
 User.prototype.cleanUp=function(){
@@ -68,7 +68,7 @@ User.prototype.login=function(){
         if(attemptedUser && bcrypt.compareSync(password,attemptedUser.password)){
             
             this.data=attemptedUser
-            //this.getAvatar()
+            this.getAvatar()
             //yes
             resolve(this.data)
          }else{

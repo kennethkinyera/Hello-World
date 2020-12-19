@@ -7,7 +7,7 @@ let User=function(data,getAvatar){
   this.data=data
   this.errors=[]
   if(getAvatar==undefined){getAvatar=false}
-  if(getAvatar==true){this.getAvatar()}
+  if(getAvatar){this.getAvatar()}
 }
 
 User.prototype.cleanUp=function(){
@@ -68,14 +68,14 @@ User.prototype.login=function(){
         if(attemptedUser && bcrypt.compareSync(password,attemptedUser.password)){
             
             this.data=attemptedUser
-            this.getAvatar()
+            this.data.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
+            //this.getAvatar()
             //yes
             resolve(this.data)
-         }else{
-             //no
-             reject("Oh no!!!")
          }
         }).catch(function(error){
+             //reject("Please try again",error)
+             console.log("error",error)
              reject("Please try again")
       })  
     })

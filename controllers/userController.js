@@ -123,7 +123,6 @@ exports.profileFollowersScreen=async function(req,res){
             isVistorProfile:req.isVistorProfile
     })
     }catch{
-
         res.render("404")
     }
 

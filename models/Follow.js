@@ -1,6 +1,7 @@
 const followsCollection = require('../db').db().collection("follows")
 const usersCollection = require('../db').db().collection("users")
 const ObjectID=require('mongodb').ObjectID
+const User=require("./User")
 
 let Follow = function(followedUsername, authorId) {
 
@@ -80,6 +81,33 @@ Follow.prototype.delete=function(){
 
             reject(this.errors)
         }
+    })
+}
+Follow.getFollowersById=function(id){
+
+    return new Promise(async(resolve,reject)=>{
+
+        try{ 
+            let followers=await followsCollection.aggregate([
+            {$match:{followedId:id}},
+            {$lookup:{from:"users",localFiled:"author",foreignFiled:"_id",as:"userDoc"}},
+            {$project:{
+                username:{$arrayElemAt:["$userDoc.username",0]},
+                email:{$arrayElemAt:["$userDoc.email",0]}
+            }}
+        ]).toArray()
+
+          followers=followers.map(function(follower){
+             //create a user
+             let user=new User(follower,true)
+             console.log("follower.username",follower.username)
+             return {username:follower.username,avatar:user.avatar}
+          })
+          resolve(followers)
+    }catch{
+        reject()
+    }
+       
     })
 }
 module.exports = Follow

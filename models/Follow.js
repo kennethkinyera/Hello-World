@@ -90,19 +90,20 @@ Follow.getFollowersById=function(id){
         try{ 
             let followers=await followsCollection.aggregate([
             {$match:{followedId:id}},
-            {$lookup:{from:"users",localField:"author",foreignField:"_id",as:"userDoc"}},
+            {$lookup:{from:"users",localField:"authorId",foreignField:"_id",as:"userDoc"}},
             {$project:{
                 username:{$arrayElemAt:["$userDoc.username",0]},
                 email:{$arrayElemAt:["$userDoc.email",0]}
             }}
         ]).toArray()
-
+//gambling here
+console.log("followers",followers)
           followers=followers.map(function(follower){
              //create a user
              let user=new User(follower,true)
-             
              return {username:follower.username,avatar:user.avatar}
           })
+          
           console.log("followers",followers)
           resolve(followers)
     }catch(error){

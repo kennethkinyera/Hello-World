@@ -88,7 +88,8 @@ exports.profilePostsScreen=function(req,res,){
             profileUsername:req.profileUser.username,
             profileAvatar:req.profileUser.avatar,
             isFollowing:req.isFollowing,
-            isVistorProfile:req.isVistorProfile
+            isVistorProfile:req.isVistorProfile,
+            counts:{postCount:req.postCount,followerCount:req.followerCount,followingCount:req.followingCount}
         })
     }).catch(function(){
 
@@ -109,7 +110,22 @@ exports.sharedProfileData=async function(req,res,next){
 
     req.isVistorProfile=isVistorProfile
     req.isFollowing=isFollowing
+
+    //retrieve post,follower and folowing counts
+    let postCountPromise= Post.countPostsByAuthor(req.profileUser._id)
+    let followerCountPromise= Follow.countFollowersById(req.profileUser._id)
+    let followingCountPromise= Follow.countFollowingById(req.profileUser._id)
+
+    let [postCount,followerCount,followingCount]=await Promise.all([postCountPromise,followerCountPromise,followingCountPromise])
+
+    //add to request object
+    req.postCount=postCount
+    req.followerCount=followerCount
+    req.followingCount=followingCount
+
     next()
+
+    
 }
 exports.profileFollowersScreen=async function(req,res){
     try{
@@ -122,7 +138,8 @@ exports.profileFollowersScreen=async function(req,res){
             profileUsername:req.profileUser.username,
             profileAvatar:req.profileUser.avatar,
             isFollowing:req.isFollowing,
-            isVistorProfile:req.isVistorProfile
+            isVistorProfile:req.isVistorProfile,
+            counts:{postCount:req.postCount,followerCount:req.followerCount,followingCount:req.followingCount}
     })
     }catch{
         res.render("404")
@@ -141,7 +158,8 @@ exports.profileFollowingScreen=async function(req,res){
             profileUsername:req.profileUser.username,
             profileAvatar:req.profileUser.avatar,
             isFollowing:req.isFollowing,
-            isVistorProfile:req.isVistorProfile
+            isVistorProfile:req.isVistorProfile,
+            counts:{postCount:req.postCount,followerCount:req.followerCount,followingCount:req.followingCount}
     })
     }catch{
         res.render("404")

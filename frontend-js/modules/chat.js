@@ -22,7 +22,7 @@ export default class Chat{
         this.chatWrapper.classList.add("chat--visible")
     }
     openConnection(){
-        alert("yuuyuyuy")
+       this.socket= io()
     }
     hideChat(){
         this.chatWrapper.classList.remove("chat--visible")

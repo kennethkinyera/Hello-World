@@ -45,4 +45,12 @@ app.use(function(req,res,next){
 
 app.use('/',router)
 
-module.exports= app
+const server=require('http').createServer(app)
+
+const io=require('socket.io')(server)
+
+io.on('connection',function(){
+    console.log("connected..")
+})
+
+module.exports= server

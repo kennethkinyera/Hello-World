@@ -22,7 +22,9 @@ export default class Chat{
         this.closeIcon.addEventListener("click",()=>this.hideChat())
     }
     sendMessageToServer(){
-        this.socket.emit('chatMessageFromBrowser',b)
+        this.socket.emit('chatMessageFromBrowser',{message:this.chatField.value})
+        this.chatField.value=''
+        this.chatField.focus()
     }
     showChat(){
         if(!this.openedYet){
@@ -33,6 +35,9 @@ export default class Chat{
     }
     openConnection(){
        this.socket= io()
+       this.socket.on('chatMessageFromServer',function(data){
+         alert(data.message)
+       })
     }
     hideChat(){
         this.chatWrapper.classList.remove("chat--visible")

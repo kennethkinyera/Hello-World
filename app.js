@@ -59,9 +59,9 @@ io.on('connection',function(socket){
        let user=socket.request.session.user
 
        socket.emit('welcome',{username:user.username,avatar:user.avatar})
-       
+
        socket.on('chatMessageFromBrowser',function(data){
-        socket.broadcast.emit('chatMessageFromServer',{message:data.message})
+        socket.broadcast.emit('chatMessageFromServer',{message:sanitizeHTML(data.message,{allowedTags:[],allowedAttributes:{}}),username:user.username,avatar:user.avatar})
     })
     }
     

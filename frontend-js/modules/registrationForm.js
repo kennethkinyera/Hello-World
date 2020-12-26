@@ -108,9 +108,9 @@ export default class RegistrationForm{
         if(! /^\S+@\S+$/.test(this.email.value)){
               this.showValidationError(this.email,"You must provide a valid email address")
         }
-        if(! this.email.errors){
+        if(!this.email.errors){
           axios.post('/doesEmailExist',{_csrf:this._csrf,email:this.email.value}).then((response)=>{
-              if(response.data){
+              if(response.data==true){
                   this.email.isUnique =false
                   this.showValidationError(this.email,"Email is already used")
               }else{
@@ -147,7 +147,7 @@ export default class RegistrationForm{
         }
         if(! this.username.errors){
             axios.post('/doesUsernameExist',{_csrf:this._csrf,username:this.username.value}).then((response)=>{
-               if(response.data){
+               if(response.data==true){
                    this.showValidationError(this.username,"That username is already taken")
                    this.username.isUnique =false
                }else{

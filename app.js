@@ -6,15 +6,8 @@ const markdown=require("marked")
 const sanitizeHTML=require("sanitize-html")
 const csrf=require('csurf')
 const app=express()
-app.use(csrf())
 
-app.use(function(req,res,next){
-  res.locals.csrfToken=req.csrfToken()
-  next()
-})
 
-const router=require('./router')
- 
 let sessionOptions=session({
     secret:"yo kk yo !!!",
     store:new MongoStore({client:require("./db")}),
@@ -24,6 +17,15 @@ let sessionOptions=session({
 })
 
 app.use(sessionOptions)
+
+app.use(csrf())
+app.use(function(req,res,next){
+  res.locals.csrfToken=req.csrfToken()
+  next()
+})
+
+const router=require('./router')
+
 app.use(flash())
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())

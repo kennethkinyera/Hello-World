@@ -4,9 +4,17 @@ const MongoStore=require("connect-mongo")(session)
 const flash=require('connect-flash')
 const markdown=require("marked")
 const sanitizeHTML=require("sanitize-html")
+const csrf=require('csurf')
 const app=express()
-const router=require('./router')
+app.use(csrf())
 
+app.use(function(req,res,next){
+  res.locals.csrfToken=req.csrfToken()
+  next()
+})
+
+const router=require('./router')
+ 
 let sessionOptions=session({
     secret:"yo kk yo !!!",
     store:new MongoStore({client:require("./db")}),

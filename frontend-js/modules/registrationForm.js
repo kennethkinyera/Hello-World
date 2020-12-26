@@ -36,8 +36,36 @@ export default class RegistrationForm{
         this.password.addEventListener("keyup",()=>{
             this.isDifferent(this.password,this.passwordHandler)
         })
+
+        this.username.addEventListener("blur",()=>{
+            this.isDifferent(this.username,this.usernameHandler)
+        })
+
+        this.email.addEventListener("blur",()=>{
+            this.isDifferent(this.email,this.emailHandler)
+        })
+
+        this.password.addEventListener("blur",()=>{
+            this.isDifferent(this.password,this.passwordHandler)
+        })
     }
     //methods
+    formSubmitHandler(){
+        this.usernameImmediately()
+        this.usernameAfterDelay()
+        this.emailAfterDelay()
+        this.passwordImmediately()
+        this.passwordAfterDelay()
+
+        if(this.username.isUnique && 
+            !this.username.errors &&
+            this.email.isUnique &&
+            !this.email.errors &&
+            !this.password.errors){
+
+           this.form.submit()
+        }
+    }
     isDifferent(el,handler){
          if(el.previousValue!=el.value){
             handler.call(this)
@@ -85,7 +113,7 @@ export default class RegistrationForm{
                   this.email.isUnique =false
                   this.showValidationError(this.email,"Email is already used")
               }else{
-                  this.email.isUnique =false
+                  this.email.isUnique =true
                   this.hideValidationError(this.email)
               }
           }).catch(()=>{

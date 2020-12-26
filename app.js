@@ -27,6 +27,16 @@ app.use(function(req,res,next){
   next()
 })
 
+app.use(function(err,req,res,next){
+  if(err){
+      if(err.code == "EBADCSRFTOKEN"){
+          req.flash('errors',"Cross Site Reference Forgery Detected")
+          req.session.save(()=>res.redirect('/'))
+      }else{
+           res.render('404')
+      }
+  }
+})
 
 app.use(express.json())
 app.use(express.static("public"))

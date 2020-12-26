@@ -44,6 +44,19 @@ export default class RegistrationForm{
         if(! /^\S+@\S+$/.test(this.email.value)){
               this.showValidationError(this.email,"You must provide a valid email address")
         }
+        if(! this.email.errors){
+          axios.post('/doesEmailExist',{email:this.email.value}).then((response)=>{
+              if(response.data){
+                  this.email.isUnique =false
+                  this.showValidationError(this.email,"Email is already used")
+              }else{
+                  this.email.isUnique =false
+                  this.hideValidationError(this.email)
+              }
+          }).catch(()=>{
+                  console.log("Please try again later")
+          })
+        }
     }
     usernameImmediately(){
         if(this.username.value != "" && ! /^([a-zA-Z0-9]+)$/.test(this.username.value)){

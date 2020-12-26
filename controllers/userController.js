@@ -2,6 +2,10 @@ const User=require("../models/User")
 const Post=require("../models/Post")
 const Follow=require("../models/Follow")
 
+exports.doesEmailExist=async function(req,res){
+   let emailbool= await User.doesEmailExist(req.body.email)
+   res.json(emailbool)
+}
 exports.doesUsernameExist=function(req,res){
     User.findByUsername(req.body.username).then(function(){
         res.json(true)

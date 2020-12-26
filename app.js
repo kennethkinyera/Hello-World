@@ -7,6 +7,7 @@ const sanitizeHTML=require("sanitize-html")
 const csrf=require('csurf')
 const app=express()
 
+const router=require('./router')
 
 let sessionOptions=session({
     secret:"yo kk yo !!!",
@@ -17,6 +18,8 @@ let sessionOptions=session({
 })
 
 app.use(sessionOptions)
+app.use(flash())
+app.use(express.urlencoded({extended:false}))
 
 app.use(csrf())
 app.use(function(req,res,next){
@@ -24,10 +27,7 @@ app.use(function(req,res,next){
   next()
 })
 
-const router=require('./router')
 
-app.use(flash())
-app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(express.static("public"))
 
@@ -76,5 +76,9 @@ io.on('connection',function(socket){
     }
     
 })
+
+
+
+
 
 module.exports= server

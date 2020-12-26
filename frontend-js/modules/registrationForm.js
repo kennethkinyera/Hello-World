@@ -22,7 +22,15 @@ export default class RegistrationForm{
          el.previousValue=el.value
     }
     usernameHandler(){
-        
+        this.usernameImmediately()
+        clearTimeout(this.username.timer)
+        this.username.timer =setTimeout(()=>this.usernameAfterDelay(),3000)
+    }
+    usernameImmediately(){
+        console.log("usernameImmediately just ran")
+    }
+    usernameAfterDelay(){
+        alert("usernameAfterDelay")
     }
     insertValidationElements(){
         this.allFields.forEach(function(el){

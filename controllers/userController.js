@@ -23,6 +23,8 @@ exports.mustBeLoggedIn=function(req,res,next){
        })
   }
 }
+
+
 exports.login=function(req,res){
 
     let user=new User(req.body)
@@ -39,6 +41,16 @@ exports.login=function(req,res){
         req.session.save(function(){
             res.redirect('/')
         })
+    })
+}
+
+exports.apiLogin=function(req,res){
+
+    let user=new User(req.body)
+    user.login().then(function(result){
+        res.json("Good job")
+    }).catch(function(error){
+        res.json("wrong")
     })
 }
 

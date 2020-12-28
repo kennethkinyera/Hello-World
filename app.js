@@ -7,6 +7,11 @@ const sanitizeHTML=require("sanitize-html")
 const csrf=require('csurf')
 const app=express()
 
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
+
+app.use('/api',require('./router-api'))
+
 const router=require('./router')
 
 let sessionOptions=session({
@@ -19,7 +24,6 @@ let sessionOptions=session({
 
 app.use(sessionOptions)
 app.use(flash())
-app.use(express.urlencoded({extended:false}))
 
 app.use(csrf())
 app.use(function(req,res,next){
@@ -38,7 +42,7 @@ app.use(function(err,req,res,next){
   }
 })
 
-app.use(express.json())
+
 app.use(express.static("public"))
 
 app.set("views","views")

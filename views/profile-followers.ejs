@@ -7,9 +7,10 @@
     <div class="list-group">
     
     <% followers.forEach(function(follower){ %> 
-          <a href="/profile/<%= follower.username %>>" class="list-group-item list-group-item-action"></a>
-          <img class="avatar-tiny" src="<%= follower.avatar %>">
-          <%= follower.username %>
+          <a href="/profile/<%= follower.username %>>" class="list-group-item list-group-item-action">
+             <img class="avatar-tiny" src="<%= follower.avatar %>">
+             <%= follower.username %>
+          </a>
     <% })%>
       
     </div>

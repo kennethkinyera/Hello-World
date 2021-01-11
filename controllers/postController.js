@@ -29,6 +29,17 @@ exports.create=function(req,res){
  })
 }
 
+exports.apiCreate=function(req,res){
+
+ let post=new Post(req.body,req.apiUser._id)
+
+ post.create().then(function(newId){
+     res.json("Congrats...")
+ }).catch(function(errors){
+      res.json(errors)
+ })
+}
+
 exports.viewEditScreen = async function(req, res) {
 
   try {
@@ -74,6 +85,17 @@ exports.edit=function(req,res){
 }
 
 exports.delete=function(req,res){
+  
+  Post.delete(req.params.id,req.visitorId).then(()=>{
+      req.flash("success", "Post successfully deleted")
+      req.session.save(()=>res.redirect(`/profile/${req.session.user.username}`))
+  }).catch(()=>{
+       req.flash("errors", "You do not have permission to delete this post")
+       req.session.save(()=>res.redirect("/"))
+  })
+}
+
+exports.apiDelete=function(req,res){
   
   Post.delete(req.params.id,req.visitorId).then(()=>{
       req.flash("success", "Post successfully deleted")

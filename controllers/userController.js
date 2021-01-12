@@ -4,7 +4,7 @@ const Follow=require("../models/Follow")
 const jwt=require('jsonwebtoken')
 
 
-exports.apiGetPostsByUsername=function(req,res){
+exports.apiGetPostsByUsername=async function(req,res){
 
     try{
 
